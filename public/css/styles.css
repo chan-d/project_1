@@ -1,5 +1,26 @@
-.movieResults {
-	min-height: 300px;
-	min-width: 300px;
-	background-color: blue;
+.form-control{
+	max-width: 50%;
+	display: inline-block;
 }
+
+#searchBox{
+	text-align: center;
+}
+.id{
+	display: none;
+}
+.left{
+	min-height: 150px;
+	width: 161px;
+}
+
+.middle{
+	min-height: 150px;
+	
+}
+
+.right {
+	min-height: 150px;
+	width: 161px;
+}
+

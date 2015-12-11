@@ -13,6 +13,22 @@ app.use(function(req, res, next) {
   });
 
 
+  app.get('/', function homepage (req, res) {
+    res.sendFile(__dirname + '/view/index.html');
+  });
+
+  app.get('/movie', function reviews(req, res){
+  	res.sendFile(__dirname + '/view/movie.html');
+  });
+
+
+  // app.get('/api/movies', function getMovies (req, res){
+
+  // });
+
+
+
+
 // listen on port 3000
 app.listen(process.env.PORT || 3000, function () {
   console.log('Express server is running on http://localhost:3000/');
