@@ -4,7 +4,7 @@ var express = require('express'),
 var db = require("./models");
 var bodyParser = require('body-parser');
 // serve static files from public folder
-app.use(express.static(__dirname + '/public'));
+app.use("/static", express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
