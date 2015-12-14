@@ -3,11 +3,11 @@ console.log("Sanity Check: JS is working!");
 $(document).ready(function(){
 var userSearched;
 
-var sampleReview = {
-	user: "adminUser",
-	completedReviews: [{movie: "this movie is the best!"}],
-	watchlistItem:[]
-};
+// var sampleReview = {
+// 	user: "adminUser",
+// 	completedReviews: [{movie: "this movie is the best!"}],
+// 	watchlistItem:[]
+// };
 
 var dataToAdd= {};
 var url;
@@ -53,7 +53,7 @@ function getReviews(){
 	});
 
 	$('.movieResults').on('click', '#getReviews', function (event){
-		console.log(sampleReview);
+		//console.log(sampleReview);
 		// renderReview(sampleReview);
 		$.ajax({
 			method: "GET",
@@ -93,8 +93,10 @@ function getReviews(){
 					method: "POST",
 					url: '/api/reviews',
 					data: reviewToAdd,
-					success: getReviews()
-				});
+					success: function(){
+						getReviews();
+					}
+					});
 		});
 
 	$('.userReview').on('click', '.editReview', function (event){
