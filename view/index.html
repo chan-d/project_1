@@ -76,6 +76,52 @@
         <p class="text-center"><small>(c) Copyright 2013 Product Name. All rights Reserved.</small></p>
         </p>
 
+
+    <!-- begin songModal: this is not visible until you call .modal() on it -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="postReviewModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Create Review</h4>
+          </div>
+          <div class="modal-body">
+            <fieldset class='form-horizontal'>
+
+            <!-- Text input-->
+            <form id='postReview'>
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="userName">User Name</label>
+              <div class="col-md-4">
+              <input id="userName" name="userName" type="text" placeholder="user name" class=" input-lg" required="">
+
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="review">Review</label>
+              <div class="col-md-4">
+             <textarea id="review" rows="10" cols="50"></textarea>
+
+              </div>
+            </div>
+            </form>
+            </fieldset>
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="saveReview">Save Review</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
+
     
   </div>
 </footer>

@@ -9,8 +9,20 @@ var sampleReview = {
 	watchlistItem:[]
 };
 
+var dataToAdd= {};
+var url;
 
-
+function getReviews(){
+		$.ajax({
+			method: "GET",
+			url: '/api/reviews',
+			success: function(response){
+				response.forEach(function (element){
+					renderReview(element);
+				});
+			}
+		});
+	}
 
 // function getMovie() {
 // 	$.ajax({
@@ -41,14 +53,17 @@ var sampleReview = {
 	});
 
 	$('.movieResults').on('click', '#getReviews', function (event){
-
 		console.log(sampleReview);
-		renderReview(sampleReview);
-
-		// $.ajax({
-		// 	method: "GET",
-		// 	url: '/api/users',
-		// });
+		// renderReview(sampleReview);
+		$.ajax({
+			method: "GET",
+			url: '/api/reviews',
+			success: function(response){
+				response.forEach(function (element){
+				renderReview(element);
+				});
+			}
+		});
 	});
 
 	$('.movieResults').on('click', '.addToWatchlist', function (event){
@@ -62,9 +77,25 @@ var sampleReview = {
 	});
 
 	$('.movieResults').on('click', '.addReview', function (event){
-		event.preventDefault();
-		alert('add a review under construction');
-	});
+		//event.preventDefault();
+		$('#postReviewModal').modal("show");
+		});
+		//dataToAdd= $('#postReview').val();
+
+
+		$('#saveReview').on('click', function (event){
+			dataToAdd.user = $('#userName').val();
+			dataToAdd.review = $('#review').val();
+			var reviewToAdd = {user: dataToAdd.user, movie: dataToAdd.review};
+			console.log(reviewToAdd);
+			$('#postReviewModal').modal("hide");
+				$.ajax({
+					method: "POST",
+					url: '/api/reviews',
+					data: reviewToAdd,
+					success: getReviews()
+				});
+		});
 
 	$('.userReview').on('click', '.editReview', function (event){
 		event.preventDefault();
@@ -73,18 +104,21 @@ var sampleReview = {
 	});
 
 	$('.userReview').on('click', '.deleteReview', function (event){
-		event.preventDefault();
-		alert('delete under construction');
-		// $.ajax({
-		// 	method: "DELETE",
-		// 	url: '/api/users',
-		// 	success: function(){
-		// 		alert('deleted');
-		// 	}
-		// });
-
+		    // var userPrompt= prompt("Are you sure? type Yes to confrim");
+		    // if (userPrompt==='yes'){
+		    var id= $(this).parents('.review').data('review-id');
+		    console.log('id',id);
+		    $('.deleteReview').data('review-id', id);
+		    url= '/api/reviews/' + id;
+		    	$.ajax({
+		    		method: "DELETE",
+		    		url: url,
+		    		success: function(response){
+		    			$('.userReview').empty();
+		    			getReviews();
+		    		}
+		    	});
 	});
-
 
 function renderSearch(movie) {
   
@@ -158,7 +192,7 @@ function renderReview(review) {
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Review:</h4>" +
-  "                        <span class='review'>" + review.review + "</span>" +
+  "                        <span class='review'>" + review.movie + "</span>" +
   "                      </li>" +
   "                    </ul>" +
   "                  </div>" +
@@ -179,3 +213,4 @@ $('.userReview').prepend(reviewHtml);
 
 }
 });
+
