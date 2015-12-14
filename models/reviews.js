@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
 
 var ReviewSchema = new Schema({
 	user: Array,
-	review: String,
+	movie: String,
 });
 
 var Review = mongoose.model('Review', ReviewSchema);

@@ -4,9 +4,11 @@ $(document).ready(function(){
 var userSearched;
 
 var sampleReview = {
-	user: "user1",
-	review: "this movie is the best!",
+	user: "adminUser",
+	completedReviews: [{movie: "this movie is the best!"}],
+	watchlistItem:[]
 };
+
 
 
 
@@ -51,9 +53,19 @@ var sampleReview = {
 
 	$('.movieResults').on('click', '.addToWatchlist', function (event){
 		event.preventDefault();
-		alert(' add to watchlist under construction');
+		alert('add to watchlist under construction');
+		// $.ajax({
+		// 	method: "POST",
+		// 	url: '/api/users',
+		// 	data: 
+		// });
 	});
-//
+
+	$('.movieResults').on('click', '.addReview', function (event){
+		event.preventDefault();
+		alert('add a review under construction');
+	});
+
 	$('.userReview').on('click', '.editReview', function (event){
 		event.preventDefault();
 		alert('edit under construction');
@@ -63,6 +75,13 @@ var sampleReview = {
 	$('.userReview').on('click', '.deleteReview', function (event){
 		event.preventDefault();
 		alert('delete under construction');
+		// $.ajax({
+		// 	method: "DELETE",
+		// 	url: '/api/users',
+		// 	success: function(){
+		// 		alert('deleted');
+		// 	}
+		// });
 
 	});
 
@@ -108,7 +127,8 @@ function renderSearch(movie) {
   "                <!-- end of movie internal row -->" +
   "              </div>" + // end of panel-body
   "              <div class='panel-footer'>" +
-  "                <button class='btn btn-success addToWatchlist'>Add to Watchlist</button>" +
+  "                <button class='btn btn-info addToWatchlist'>Add to Watchlist</button>" +
+  "                <button class='btn btn-success addReview'>Add a Review</button>" +
   "              </div>" +
   "            </div>" +
   "          </div>" +

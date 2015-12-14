@@ -21,6 +21,9 @@ app.use(function(req, res, next) {
   	res.sendFile(__dirname + '/view/movie.html');
   });
 
+app.delete('/api/users', function deleteUserReview(req, res){
+	console.log("delete user review");
+});
 
   // app.get('/api/movies', function getMovies (req, res){
 
