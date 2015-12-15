@@ -1,3 +1,28 @@
+
+
+#banner{
+	width: 100%;
+	z-index: 1;
+	position: relative;
+	top: 150px;
+}
+
+.jumbotron{
+	margin-top: -200px;
+}
+
+h1 {
+	color: limegreen;
+	position: relative;
+	top: -35px;
+	left: -15px;
+	z-index: 2;
+}
+.top{
+	color: white;
+	position: relative;
+	z-index: 2;
+}
 .form-control{
 	max-width: 50%;
 	display: inline-block;

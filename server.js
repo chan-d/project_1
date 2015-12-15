@@ -30,6 +30,24 @@ var reviews = [];
   	});
   });
 
+  app.get('/api/reviews/:id', function getReviewsById(req, res){
+  	db.Review.find({_id: req.params.id}, function (err, review){
+  		console.log(review);
+  		res.send(review);
+  	});
+  });
+
+
+app.put('/api/reviews/:review_id', function editreview(req, res){
+  var newData = req.body;
+  console.log('newData', newData);
+  db.Review.findByIdAndUpdate(req.params.review_id, newData, function(err, success){
+    if(err) {console.log(err);}
+    success.save(function (err){
+    });
+    res.json(success);
+  });
+});
   app.post('/api/reviews', function postreview(req, res){ 
   	console.log(req.body);
   	var newReview= req.body;
@@ -55,9 +73,6 @@ app.delete('/api/reviews/:review_id', function deleteUserReview(req, res){
 	});
 });
 
-  // app.get('/api/movies', function getMovies (req, res){
-
-  // });
 
 
 

@@ -19,12 +19,14 @@
   </head>
   <body>
 <header>
-    <div class="jumbotron">
+
+    <div class="jumbotron"><img src="/static/images/mst3k.png" id="banner">
       <div class="container">
         <h1>B-Side reviews</h1>
-        <p>Movie reviews by people, for people</p>
+        <p class='top'>Movie reviews by people, for people</p>
       </div>
     </div>
+
  <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -131,7 +133,7 @@
           </div>
           <div class="modal-body">
             <div class="row">
-              <form id='editReview'>
+              <form id='editModal'>
               <div class="form-group">
                 <label class="col-md-4 control-label" for="userName">User Name</label>
 
@@ -149,7 +151,7 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             <!-- Consider deleting/hiding this button and adding/showing it upon data entry. -->
-            <button type="button" class="btn btn-info" id="updateReview">Save Changes</button>
+            <button type="button" class="btn btn-success" id="updateReview">Save Changes</button>
           </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

@@ -40,6 +40,7 @@ function getReviews(){
 			url: '/api/reviews',
 			success: function(response){
 				response.forEach(function (element){
+				$('.userReview').empty();
 				renderReview(element);
 				});
 			}
@@ -77,8 +78,45 @@ function getReviews(){
 	});
 
 	$('.userReview').on('click', '.editReview', function (event){
+	var id= $(this).parents('.review').data('review-id');
+	$('#editReviewModal').data('review-id', id);
+		console.log('id',id);
+		url= '/api/reviews/' + id;
+        $.ajax({
+          method: "GET",
+          url: url,
+          //data: dataToAdd,
+          success: function (data) {
+          	data.forEach(function(element){
+          		//console.log(element);
+	        $("#editReviewModal #editUserName").val(element.user);
+	        $("#editReviewModal #editReview").val(element.movie);
+          	});
+          }
+        });
 		$('#editReviewModal').modal('show');
 	});
+
+	$('#updateReview').on('click', function (event){
+		event.preventDefault();
+		var id= $('#editReviewModal').data('review-id');
+		dataToAdd._id = id;
+		dataToAdd.user = $("#editReviewModal #editUserName").val();
+		dataToAdd.movie = $("#editReviewModal #editReview").val();
+		console.log('data to add', dataToAdd);
+		url = '/api/reviews/' + id; 
+			$.ajax({
+				method: "PUT",
+				url: url,
+				data: dataToAdd,
+				success: function (stuff){
+					$('#editReviewModal').modal('hide');
+					$('.userReview').empty();
+					getReviews();
+				}
+			});
+	});
+
 
 	$('.userReview').on('click', '.deleteReview', function (event){
 		    var id= $(this).parents('.review').data('review-id');
