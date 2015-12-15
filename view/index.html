@@ -122,6 +122,40 @@
 
 
 
+<div class="modal fade" tabindex="-1" role="dialog" id="editReviewModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Update Review</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <form id='editReview'>
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="userName">User Name</label>
+
+                <input id="editUserName" name="userName" type="text" placeholder="username" class=" input-lg" required="">
+              <!-- Text input-->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="review">Review</label>
+
+               <textarea id="editReview" rows="10" cols="50"></textarea>
+                </div>
+              </div> 
+              </div>
+              </div>
+              </form>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <!-- Consider deleting/hiding this button and adding/showing it upon data entry. -->
+            <button type="button" class="btn btn-info" id="updateReview">Save Changes</button>
+          </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
     
   </div>
 </footer>

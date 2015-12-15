@@ -35,7 +35,6 @@ var reviews = [];
   	var newReview= req.body;
   	db.Review.create(newReview, function (err, success){
   		if(err) {console.log(err);}
-  		//success.movie.push(newReview);
   		success.save(function (err){
   			if (err) {console.log(err);}
   	db.Review.find({}, function findReviews(err, found){

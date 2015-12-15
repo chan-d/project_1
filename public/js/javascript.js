@@ -3,12 +3,6 @@ console.log("Sanity Check: JS is working!");
 $(document).ready(function(){
 var userSearched;
 
-// var sampleReview = {
-// 	user: "adminUser",
-// 	completedReviews: [{movie: "this movie is the best!"}],
-// 	watchlistItem:[]
-// };
-
 var dataToAdd= {};
 var url;
 
@@ -23,18 +17,6 @@ function getReviews(){
 			}
 		});
 	}
-
-// function getMovie() {
-// 	$.ajax({
-// 		method: "GET",
-// 		url: '/api/movies',
-// 		success: function(movie){
-// 			stuff.forEach(function (m){
-// 				renderSearch(m);
-// 			});
-// 		}
-// 	});
-// }
 
 	$('#searchBox').on('submit', function (event){
 		event.preventDefault();
@@ -53,8 +35,6 @@ function getReviews(){
 	});
 
 	$('.movieResults').on('click', '#getReviews', function (event){
-		//console.log(sampleReview);
-		// renderReview(sampleReview);
 		$.ajax({
 			method: "GET",
 			url: '/api/reviews',
@@ -77,13 +57,10 @@ function getReviews(){
 	});
 
 	$('.movieResults').on('click', '.addReview', function (event){
-		//event.preventDefault();
 		$('#postReviewModal').modal("show");
 		});
-		//dataToAdd= $('#postReview').val();
 
-
-		$('#saveReview').on('click', function (event){
+	$('#saveReview').on('click', function (event){
 			dataToAdd.user = $('#userName').val();
 			dataToAdd.review = $('#review').val();
 			var reviewToAdd = {user: dataToAdd.user, movie: dataToAdd.review};
@@ -97,17 +74,13 @@ function getReviews(){
 						getReviews();
 					}
 					});
-		});
+	});
 
 	$('.userReview').on('click', '.editReview', function (event){
-		event.preventDefault();
-		alert('edit under construction');
-
+		$('#editReviewModal').modal('show');
 	});
 
 	$('.userReview').on('click', '.deleteReview', function (event){
-		    // var userPrompt= prompt("Are you sure? type Yes to confrim");
-		    // if (userPrompt==='yes'){
 		    var id= $(this).parents('.review').data('review-id');
 		    console.log('id',id);
 		    $('.deleteReview').data('review-id', id);
