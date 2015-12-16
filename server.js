@@ -1,8 +1,14 @@
 // require express and other modules
 var express = require('express'),
+	Review = require('./models/reviews.js'),
+    User = require('./models/users.js'),
     app = express();
-var db = require("./models");
-var bodyParser = require('body-parser');
+	db = require("./models"),
+	bodyParser = require('body-parser'),
+    cookieParser = require('cookie-parser'),
+    session = require('express-session'),
+    passport = require('passport'),
+    LocalStrategy = require('passport-local').Strategy;
 // serve static files from public folder
 app.use("/static", express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -12,16 +18,75 @@ app.use(function(req, res, next) {
     next();
   });
 
+// middleware for auth
+app.use(cookieParser());
+app.use(session({
+  secret: 'supersecretkey',
+  resave: false,
+  saveUninitialized: false
+}));
 
-var reviews = [];
+app.use(passport.initialize());
+app.use(passport.session());
+// passport config
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
+//user auth
+  app.get('/signup', function reviews(req, res){
+  	res.sendFile(__dirname + '/view/signup.html');
+  });
+
+app.post('/signup', function (req, res) {
+  User.register(new User({ username: req.body.username }), req.body.password,
+    function (err, newUser) {
+      passport.authenticate('local')(req, res, function() {
+        res.redirect('/');
+      });
+    }
+  );
+});
+
+app.get('/logout', function (req, res) {
+  req.logout();
+  res.redirect('/');
+});
+
+app.get('/user/:id', function findUser(req, res){
+  var userId = req.params.id;
+
+	db.User.findById({_id: userId}, function (err, found){
+		res.json(found);
+	});
+});
+
+  app.get('/users', function userPage (req, res) {
+    db.User.find({}, function (err, found){
+    	res.json(found);
+    });
+  });
+
+//html endpoints
   app.get('/', function homepage (req, res) {
     res.sendFile(__dirname + '/view/index.html');
   });
 
-  app.get('/movie', function reviews(req, res){
-  	res.sendFile(__dirname + '/view/movie.html');
+  app.get('/signup', function reviews(req, res){
+  	res.sendFile(__dirname + '/view/signup.html');
+  });
+
+  app.get('/userName', function userPage(req, res){
+    res.sendFile(__dirname + '/view/user.html');
+  });
+
+//api endpoints
+  app.get('/api/users', function profilePage(req, res){
+    db.User.find({}, function (err, User){
+      console.log(User);
+      res.send(User);
+    });
   });
 
   app.get('/api/reviews', function getReviews(req, res){
@@ -40,7 +105,6 @@ var reviews = [];
 
 app.put('/api/reviews/:review_id', function editreview(req, res){
   var newData = req.body;
-  console.log('newData', newData);
   db.Review.findByIdAndUpdate(req.params.review_id, newData, function(err, success){
     if(err) {console.log(err);}
     success.save(function (err){
@@ -48,17 +112,17 @@ app.put('/api/reviews/:review_id', function editreview(req, res){
     res.json(success);
   });
 });
+
   app.post('/api/reviews', function postreview(req, res){ 
-  	console.log(req.body);
   	var newReview= req.body;
   	db.Review.create(newReview, function (err, success){
   		if(err) {console.log(err);}
   		success.save(function (err){
   			if (err) {console.log(err);}
-  	db.Review.find({}, function findReviews(err, found){
-  		console.log(found);
-  	});
-  			res.send(success);
+  	db.User.create(newReview, function postToUser(err, userpost){
+    console.log('post to user', userpost);
+  	   });		
+    res.send(success);
   		});
   		
   	});

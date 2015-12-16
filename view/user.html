@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Blank</title>
+    <title>Register</title>
 
     <!-- STYLESHEETS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -19,46 +19,48 @@
   </head>
   <body>
 <header>
-    <div class="jumbotron">
+    <div class="jumbotron"><img src="/static/images/mst3k.png" id="banner">
       <div class="container">
         <h1>B-Side reviews</h1>
-        <p>Movie reviews by people, for people</p>
+        <p class="top">Movie reviews by people, for people</p>
       </div>
     </div>
  <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand"> awesome movie search</a>
+      <a class="navbar-brand"> <div class='profile'>profile</div></a>
     </div>
     <div>
-      <ul class="nav navbar-nav toRight">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">movies</a></li>
-        <li><a href="#">users</a></li> 
+      <ul class="nav navbar-nav pull-right">
+        <li class="active"><a href="/">Home</a></li>
+        <li><a href="#">Users</a></li>
+        <li><a href="/logout">logout</a></li> 
       </ul>
     </div>
   </div>
 </nav>
 </header>
+
               <div class="container">
               <div class='row'>
               <div class="col-sm-2 left"></div>
               <div class="col-sm-8 middle">
-              <div class='movieResults'>
-              </div></div>
+                <div class='userReviews'></div>  
+              </div>
               <div class="col-sm-2 right"></div>
               </div>
               </div>
-    </div>
-  </div>
-<footer>
-<br />
-  <div class="panel panel-default">
-    <div class="panel-body">
-      
+
+
+
+    <footer>
+    <br />
+      <div class="panel panel-default">
+        <div class="panel-body">
         <h1 class="mid text-center"> Wanna get in touch?</h1>
+      </div>
     </div>
-  </div>
+    </footer>
 
         <p class="text-center"><small>(c) Copyright 2013 Product Name. All rights Reserved.</small></p>
         </p>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Register</title>
+
+    <!-- STYLESHEETS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+
+    <!-- VENDOR SCRIPTS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <!-- APPLICATION SCRIPTS -->
+    <script src="/static/js/javascript.js"></script>
+  </head>
+  <body>
+<header>
+    <div class="jumbotron"><img src="/static/images/mst3k.png" id="banner">
+      <div class="container">
+        <h1>B-Side reviews</h1>
+        <p class="top">Movie reviews by people, for people</p>
+      </div>
+    </div>
+ <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand"> awesome movie search</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav pull-right">
+        <li class="active"><a href="/">Home</a></li>
+        <li><a href="#">Users</a></li>
+        <li><a href="/signup">Sign up</a></li> 
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+<div class="container sign-up-box">
+  <h2>Sign Up</h2>
+    <br>
+    <form method="POST" action="/signup">
+      <div class="form-group">
+        <input type="text" name="username" class="input_box" placeholder="Username" autofocus>
+      </div>
+      <div class="form-group">
+        <input type="password" name="password" class="input_box" placeholder="Password">
+      </div>
+      <div class="form-group">
+        <input type="submit" class="btn btn-block btn-primary" value="Sign Up">
+      </div>
+    </form>
+</div>
+     
+    <footer>
+    <br />
+      <div class="panel panel-default">
+        <div class="panel-body">
+      
+        <h1 class="mid text-center"> Wanna get in touch?</h1>
+      </div>
+    </div>
+    </footer>
+
+        <p class="text-center"><small>(c) Copyright 2013 Product Name. All rights Reserved.</small></p>
+        </p>
+
+    
+  </div>
+</footer>
+</body>
+</html>

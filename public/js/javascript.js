@@ -28,7 +28,6 @@ function getReviews(){
 			url: 'http://www.omdbapi.com/?t=' + userSearched + '&y=&plot=short&r=json',
 			success: function(movie){
 				renderSearch(movie);
-
 			}
 		});
 
@@ -62,9 +61,10 @@ function getReviews(){
 		});
 
 	$('#saveReview').on('click', function (event){
+			dataToAdd.movie = $('#movieSearch').val();
 			dataToAdd.user = $('#userName').val();
 			dataToAdd.review = $('#review').val();
-			var reviewToAdd = {user: dataToAdd.user, movie: dataToAdd.review};
+			var reviewToAdd = {user: dataToAdd.user, movie: dataToAdd.movie, review: dataToAdd.review};
 			console.log(reviewToAdd);
 			$('#postReviewModal').modal("hide");
 				$.ajax({
@@ -85,10 +85,8 @@ function getReviews(){
         $.ajax({
           method: "GET",
           url: url,
-          //data: dataToAdd,
           success: function (data) {
           	data.forEach(function(element){
-          		//console.log(element);
 	        $("#editReviewModal #editUserName").val(element.user);
 	        $("#editReviewModal #editReview").val(element.movie);
           	});
@@ -205,7 +203,7 @@ function renderReview(review) {
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Review:</h4>" +
-  "                        <span class='review'>" + review.movie + "</span>" +
+  "                        <span class='review'>" + review.review + "</span>" +
   "                      </li>" +
   "                    </ul>" +
   "                  </div>" +
