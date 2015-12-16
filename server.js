@@ -54,9 +54,8 @@ app.get('/logout', function (req, res) {
   res.redirect('/');
 });
 
-app.get('/user/:id', function findUser(req, res){
+app.get('/users/:id', function findUser(req, res){
   var userId = req.params.id;
-
 	db.User.findById({_id: userId}, function (err, found){
 		res.json(found);
 	});
@@ -67,6 +66,15 @@ app.get('/user/:id', function findUser(req, res){
     	res.json(found);
     });
   });
+
+  app.delete('/users/:id', function deleteUser(req, res){
+
+    var userId = req.params.id;
+    console.log('userId', userId);
+    db.User.findByIdAndRemove({_id: userId}, function (err, sucess){
+    });
+  });
+
 
 //html endpoints
   app.get('/', function homepage (req, res) {
@@ -82,12 +90,12 @@ app.get('/user/:id', function findUser(req, res){
   });
 
 //api endpoints
-  app.get('/api/users', function profilePage(req, res){
-    db.User.find({}, function (err, User){
-      console.log(User);
-      res.send(User);
-    });
-  });
+  // app.get('/api/users', function profilePage(req, res){
+  //   db.User.find({}, function (err, User){
+  //     console.log(User);
+  //     res.send(User);
+  //   });
+  // });
 
   app.get('/api/reviews', function getReviews(req, res){
   	db.Review.find({}, function (err, review){

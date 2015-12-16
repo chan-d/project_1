@@ -3,9 +3,8 @@ var mongoose = require('mongoose'),
 
 var ReviewSchema = new Schema({
 	user: Array,
-	// review: Array, //// [{movie:"Pan", review:"this movie stinks"}]
 	movie: String,
-	review: String
+	text: String
 });
 
 var Review = mongoose.model('Review', ReviewSchema);

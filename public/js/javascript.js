@@ -18,6 +18,49 @@ function getReviews(){
 		});
 	}
 
+function getUser(){
+				$.ajax({
+					method: "GET",
+					url: '/users',
+					success: function (response){
+						response.forEach(function (element){
+							renderProfile(element);
+						});
+					}
+
+				});
+		}
+getUser();
+
+
+//delete user
+	$('.userName').on('click', '.deleteUser', function (event){
+		    var id= $(this).parents('.user').data('user-id');
+		    console.log('id',id);
+		    $('.deleteReview').data('user-id', id);
+		    url= '/users/' + id;
+		    	$.ajax({
+		    		method: "DELETE",
+		    		url: url,
+		    		success: function(){
+		    			$('.userName').empty();
+		    			$.ajax({
+		    				method: "GET",
+		    				url: '/users',
+		    				success: function(response){
+		    					rennderProfile(response);
+		    				}
+		    			});
+		    		}
+		    	});
+	});
+
+
+
+
+
+
+//movie search
 	$('#searchBox').on('submit', function (event){
 		event.preventDefault();
 		$('.movieResults').empty();
@@ -56,6 +99,7 @@ function getReviews(){
 		// });
 	});
 
+//reviews
 	$('.movieResults').on('click', '.addReview', function (event){
 		$('#postReviewModal').modal("show");
 		});
@@ -131,6 +175,59 @@ function getReviews(){
 		    	});
 	});
 
+//for user.html
+function renderProfile(user) {
+  var profileHtml =
+  "        <!-- one user -->" +
+  "        <div class='row user' data-user-id='" + user._id + "'>" +
+  "          <div class='col-md-10 col-md-offset-1'>" +
+  "            <div class='panel panel-default'>" +
+  "              <div class='panel-body'>" +
+  "              <!-- begin movie internal row -->" +
+  "                <div class='row'>" +
+  "                  <div class='col-md-3 col-xs-12 thumbnail userAvatar'>" +
+  "                     <img src='" + "http://placehold.it/400x400'" +  " alt='user avatar'>" +
+  "                  </div>" +
+  "                  <div class='col-md-9 col-xs-12'>" +
+  "                    <ul class='list-group'>" +
+  "                      <li class='list-group-item'>" +
+  "                        <h4 class='inline-header'> user name:</h4>" +
+  "                        <span class='User'>"  + user.username + "</span>" +
+  "                      </li>" +
+  // "                      <li class='list-group-item'>" +
+  // "                        <h4 class='inline-header'>Movie rating:</h4>" +
+  // "                        <span class='Rated'>" + movie.Rated + "</span>" +
+  // // "                      </li>" +
+  // "                      <li class='list-group-item'>" +
+  // "                        <h4 class='inline-header'>Released date:</h4>" +
+  // "                        <span class='Released'>" + movie.Released + "</span>" +
+  // "                      </li>" +
+  // "                      <li class='list-group-item'>" +
+  // "                        <h4 class='inline-header'> Summary:</h4>" +
+  // "                        <span class='Plot'>" + movie.Plot + "</span>" +
+  // "                      </li>" +
+  // "                      <li class='list-group-item id'>" +
+  // "                        <h4 class='inline-header id'>imdb:</h4>" +
+  // "                         <span class='imdbID id'>" + movie.imdbID+ "</span>" +
+  // "                      </li>" +
+  "                    </ul>" +
+  "                  </div>" +
+  "                </div>" +
+  "                <!-- end of user internal row -->" +
+  "              </div>" + // end of panel-body
+  "              <div class='panel-footer'>" +
+  "                <button class='btn btn-info deleteUser'>Delete User</button>" +
+  // "                <button class='btn btn-success addReview'>Add a Review</button>" +
+  "              </div>" +
+  "            </div>" +
+  "          </div>" +
+  "          <!-- end one user -->";
+//$('.userName').empty();
+$('.userName').prepend(profileHtml);
+}
+
+	
+//makes movies
 function renderSearch(movie) {
   
   var searchHtml =
@@ -181,7 +278,7 @@ function renderSearch(movie) {
 $('.movieResults').empty();
 $('.movieResults').prepend(searchHtml);
 }
-
+//makes reviews
 function renderReview(review) {
 
   var reviewHtml =
