@@ -28,11 +28,11 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
 // passport config
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
 
 //user auth
   app.get('/signup', function reviews(req, res){
@@ -77,20 +77,9 @@ app.get('/users/:id/reviews', function findUser(req, res){
   app.get('/userName', function (req, res) {
     res.json({user: req.user});
   });
-  // app.post('/users/:id/reviews', function userReviews(){
-  //   var id = req.params.id;
-  //   var dataAdded = req.body;
-  //   console.log('userpostid' , id);
-  //   console.log('userpost req.body', req.body);
-  //   db.User.create({_id: id}, dataAdded, function(err, success){
-  //     console.log(success);
-  //   });
-  // });
 
   app.delete('/users/:id', function deleteUser(req, res){
-
     var userId = req.params.id;
-    console.log('userId', userId);
     db.User.findByIdAndRemove({_id: userId}, function (err, sucess){
     });
   });
@@ -124,24 +113,14 @@ app.get('/users/:id/reviews', function findUser(req, res){
     }
   });
 
-//api endpoints
-  // app.get('/api/users', function profilePage(req, res){
-  //   db.User.find({}, function (err, User){
-  //     console.log(User);
-  //     res.send(User);
-  //   });
-  // });
   app.post('/users/:id/reviews', function userPostedReview(req,res){
-    console.log('req.body', req.body);
-    var id = req.params.id;
-    var userPost = req.body;
-    var user= userPost.user;
-    var movie = userPost.movie;
-    var text = userPost.text;
-    var postData=  {movie: movie, text: text};
+      var id = req.params.id;
+      var userPost = req.body;
+      var user= userPost.user;
+      var movie = userPost.movie;
+      var text = userPost.text;
+      var postData=  {movie: movie, text: text};
     db.User.findById(id, function (err, success){
-      
-      //db.User.reviews.update(postData);
       success.reviews.push(postData);
       success.save(function(err){
         if (err) {console.log(err);}
@@ -180,22 +159,19 @@ app.get('/users/:id/reviews', function findUser(req, res){
 app.put('/api/reviews/:review_id', function editreview(req, res){
   var newData = req.body;
   db.Review.findByIdAndUpdate(req.params.review_id, newData, function(err, success){
-    if(err) {console.log(err);}
+      if(err) {console.log(err);}
     success.save(function (err){
     });
     res.json(success);
   });
 });
  
-  app.post('/api/reviews', function postreview(req, res){ 
-  	var newReview= req.body;
-  	db.Review.create(newReview, function (err, success){
-  		if(err) {console.log(err);}
-  		success.save(function (err){
-  			if (err) {console.log(err);}
-  	// db.User.create(newReview, function postToUser(err, userpost){
-   //  console.log('post to user', userpost);
-  	   // });		
+app.post('/api/reviews', function postreview(req, res){ 
+  var newReview= req.body;
+  db.Review.create(newReview, function (err, success){
+  	 if(err) {console.log(err);}
+  	success.save(function (err){
+  		if (err) {console.log(err);}
     res.send(success);
   		});
   		
@@ -210,9 +186,6 @@ app.delete('/api/reviews/:review_id', function deleteUserReview(req, res){
     	res.send({status: 200});
 	});
 });
-
-
-
 
 
 
