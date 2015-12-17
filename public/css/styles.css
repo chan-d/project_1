@@ -36,6 +36,7 @@
 	position: relative;
 	z-index: 2;
 	top: 75px;
+	font-family: 'Chewy', cursive;
 }
 .form-control{
 	max-width: 50%;
@@ -80,8 +81,16 @@
 	font-size: 50px;
 }
 
+.footer{
+	color: white;
+}
 body {
 	background-color: black;
+}
+
+h2{
+	color: white;
+	font-family: 'Chewy', cursive;
 }
 
 h4 {
