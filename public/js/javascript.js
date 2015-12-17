@@ -59,6 +59,8 @@ function getUser(){
 		    console.log('id',id);
 		    $('.deleteReview').data('user-id', id);
 		    url= '/users/' + id;
+		    var confrim = prompt("Are you sure? type 'delete' to delete");
+		    	if (confrim.toLowerCase() === 'delete'){
 		    	$.ajax({
 		    		method: "DELETE",
 		    		url: url,
@@ -72,7 +74,11 @@ function getUser(){
 		    				}
 		    			});
 		    		}
-		    	});
+		    	}); alert('deleted user');
+		    	}else {
+		    		alert("please type 'delete' (case sensitive) to delete user");
+		    	}
+
 	});
 
 //movie search
