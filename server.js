@@ -139,7 +139,6 @@ app.get('/users/:id/reviews', function findUser(req, res){
     var movie = userPost.movie;
     var text = userPost.text;
     var postData=  {movie: movie, text: text};
-    console.log('postData', postData);
     db.User.findById(id, function (err, success){
       
       //db.User.reviews.update(postData);
@@ -147,7 +146,6 @@ app.get('/users/:id/reviews', function findUser(req, res){
       success.save(function(err){
         if (err) {console.log(err);}
       });
-      console.log('success', success);
       res.send(success);
     });
   });
@@ -157,10 +155,8 @@ app.get('/users/:id/reviews', function findUser(req, res){
     var reviewId = req.params.id;
     db.User.findById(userId , function (err, foundUser){
       var foundReview = foundUser.reviews.id(reviewId);
-      console.log('found review', foundReview);
       foundReview.remove();
       foundUser.save(function (err, saved){
-        console.log('saved', saved);
         res.send(saved);
       });
 
@@ -176,7 +172,6 @@ app.get('/users/:id/reviews', function findUser(req, res){
 
   app.get('/api/reviews/:id', function getReviewsById(req, res){
   	db.Review.find({_id: req.params.id}, function (err, review){
-  		console.log(review);
   		res.send(review);
   	});
   });

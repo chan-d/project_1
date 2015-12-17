@@ -32,7 +32,6 @@ function getUserReviews() {
 								url: '/users/' + id + '/reviews',
 								success: function(content) {
 									content.reviews.forEach(function (data){
-										//console.log('data', data);
 										renderUserReview(data);
 									});
 								}
@@ -46,7 +45,6 @@ function getUser(){
 					method: "GET",
 					url: '/users',
 					success: function (response){
-						console.log('getuser response', response);
 						response.forEach(function (element){
 							renderProfile(element);
 						});
@@ -82,10 +80,9 @@ function getUser(){
 		event.preventDefault();
 		$('.movieResults').empty();
 		userSearched = $('#movieSearch').val();
-		console.log(userSearched);
 		$.ajax({
 			method: "GET",
-			url: 'http://www.omdbapi.com/?t=' + userSearched + '&y=&plot=short&r=json',
+			url: 'http://www.omdbapi.com/?t=' + userSearched + '&y=&plot=full&r=json',
 			success: function(movie){
 				renderSearch(movie);
 			}
@@ -128,7 +125,6 @@ function getUser(){
 			dataToAdd.user = $('#userName').val();
 			dataToAdd.text = $('#review').val();
 			var reviewToAdd = {user: dataToAdd.user, movie: dataToAdd.movie, text: dataToAdd.text};
-			console.log('review to add', reviewToAdd);
 			$('#postReviewModal').modal("hide");
 				$.ajax({
 					mehtod: "GET",
@@ -142,7 +138,6 @@ function getUser(){
 								data: reviewToAdd,
 								success: function(stuff) {
 									stuff.reviews.forEach(function(element){
-										console.log('element', element);
 										renderUserReview(element);
 									});
 								}
@@ -153,6 +148,8 @@ function getUser(){
 								url: '/api/reviews',
 								data: reviewToAdd,
 								success: function(element){
+									$('.last').show();
+									$('.userReview').empty();
 									renderReview(element);
 								}
 							});
@@ -164,7 +161,6 @@ function getUser(){
 	$('.userReview').on('click', '.editReview', function (event){
 	var id= $(this).parents('.review').data('review-id');
 	$('#editReviewModal').data('review-id', id);
-		console.log('id',id);
 		url= '/api/reviews/' + id;
         $.ajax({
           method: "GET",
@@ -172,7 +168,7 @@ function getUser(){
           success: function (data) {
           	data.forEach(function(element){
 	        $("#editReviewModal #editUserName").val(element.user);
-	        $("#editReviewModal #editReview").val(element.movie);
+	        $("#editReviewModal #editReview").val(element.text);
           	});
           }
         });
@@ -185,7 +181,6 @@ function getUser(){
 		dataToAdd._id = id;
 		dataToAdd.user = $("#editReviewModal #editUserName").val();
 		dataToAdd.movie = $("#editReviewModal #editReview").val();
-		console.log('data to add', dataToAdd);
 		url = '/api/reviews/' + id; 
 			$.ajax({
 				method: "PUT",
@@ -203,7 +198,6 @@ function getUser(){
 	$('.userReview').on('click', '.deleteReview', function (event){
 			event.preventDefault();
 		    var id= $(this).parents('.review').data('review-id');
-		    console.log('id',id);
 		    $('.deleteReview').data('review-id', id);
 		    url= '/api/reviews/' + id;
 		    	$.ajax({
@@ -221,8 +215,6 @@ function getUser(){
 	$('.userName').on('click', '.deleteUserReview', function (event){
 		var postId = $(this).parents('.post').data('post-id');
 		var userId = $(this).parents('.user').data('user-id');
-		console.log('postId', postId);
-		console.log('userId', userId);
 		$('.deleteUserReview').data('post-id');
 		url = '/users/' + userId + '/reviews/'+ postId;
 			$.ajax({
@@ -286,7 +278,6 @@ $('.userName').prepend(profileHtml);
 }
 
 function renderUserReview(content) {
-	//console.log('content', content);
   var UserReviewHtml =
 
   "        <!-- one user -->" +
@@ -311,7 +302,7 @@ function renderUserReview(content) {
   "              </div>" + // end of panel-body
   "              <div class='panel-footer'>" +
   "                <button class='btn btn-danger deleteUserReview'>Delete Review</button>" +
-  "                <button class='btn btn-warning editUserReview'>Edit Review</button>" +
+  // "                <button class='btn btn-warning editUserReview'>Edit Review</button>" +
   "              </div>" +
   "            </div>" +
   "          </div>" +

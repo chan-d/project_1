@@ -58,7 +58,10 @@ h1 {
 	width: 100%;
 }
 
-
+.last {
+	text-align: center;
+	display: none;
+}
 
 
 
