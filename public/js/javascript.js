@@ -5,7 +5,9 @@ var userSearched;
 
 var dataToAdd= {};
 var url;
+getUserReviews();
 
+//gets all reviews
 function getReviews(){
 		$.ajax({
 			method: "GET",
@@ -18,20 +20,40 @@ function getReviews(){
 		});
 	}
 
+function getUserReviews() {
+					$.ajax({
+					method: "GET",
+					url: '/profile',
+					success: function(response){
+						var id = response.user._id;
+						renderProfile(response.user);
+							$.ajax({
+								method: "GET",
+								url: '/users/' + id + '/reviews',
+								success: function(content) {
+									content.reviews.forEach(function (data){
+										//console.log('data', data);
+										renderUserReview(data);
+									});
+								}
+							});
+					}
+				});
+		}
+//gets all users
 function getUser(){
 				$.ajax({
 					method: "GET",
 					url: '/users',
 					success: function (response){
+						console.log('getuser response', response);
 						response.forEach(function (element){
 							renderProfile(element);
 						});
 					}
 
 				});
-		}
-getUser();
-
+	}
 
 //delete user
 	$('.userName').on('click', '.deleteUser', function (event){
@@ -55,11 +77,6 @@ getUser();
 		    	});
 	});
 
-
-
-
-
-
 //movie search
 	$('#searchBox').on('submit', function (event){
 		event.preventDefault();
@@ -76,19 +93,21 @@ getUser();
 
 	});
 
+//get all movie reviews
 	$('.movieResults').on('click', '#getReviews', function (event){
+		event.preventDefault();
 		$.ajax({
 			method: "GET",
 			url: '/api/reviews',
 			success: function(response){
-				response.forEach(function (element){
 				$('.userReview').empty();
+				response.forEach(function (element){
 				renderReview(element);
 				});
 			}
 		});
 	});
-
+// not working
 	$('.movieResults').on('click', '.addToWatchlist', function (event){
 		event.preventDefault();
 		alert('add to watchlist under construction');
@@ -99,7 +118,7 @@ getUser();
 		// });
 	});
 
-//reviews
+// add reviews
 	$('.movieResults').on('click', '.addReview', function (event){
 		$('#postReviewModal').modal("show");
 		});
@@ -107,20 +126,41 @@ getUser();
 	$('#saveReview').on('click', function (event){
 			dataToAdd.movie = $('#movieSearch').val();
 			dataToAdd.user = $('#userName').val();
-			dataToAdd.review = $('#review').val();
-			var reviewToAdd = {user: dataToAdd.user, movie: dataToAdd.movie, review: dataToAdd.review};
-			console.log(reviewToAdd);
+			dataToAdd.text = $('#review').val();
+			var reviewToAdd = {user: dataToAdd.user, movie: dataToAdd.movie, text: dataToAdd.text};
+			console.log('review to add', reviewToAdd);
 			$('#postReviewModal').modal("hide");
 				$.ajax({
-					method: "POST",
-					url: '/api/reviews',
-					data: reviewToAdd,
-					success: function(){
-						getReviews();
+					mehtod: "GET",
+					url: '/profile',
+					success: function(response){
+						var id = response.user._id;
+						//post to users/:id/reviews
+							$.ajax({
+								method: "POST",
+								url: '/users/' + id + '/reviews',
+								data: reviewToAdd,
+								success: function(stuff) {
+									stuff.reviews.forEach(function(element){
+										console.log('element', element);
+										renderUserReview(element);
+									});
+								}
+							});
+							//post to /api/reviews
+							$.ajax({
+								method: "POST",
+								url: '/api/reviews',
+								data: reviewToAdd,
+								success: function(element){
+									renderReview(element);
+								}
+							});
 					}
-					});
+				});
 	});
 
+// edit review
 	$('.userReview').on('click', '.editReview', function (event){
 	var id= $(this).parents('.review').data('review-id');
 	$('#editReviewModal').data('review-id', id);
@@ -159,8 +199,9 @@ getUser();
 			});
 	});
 
-
+//delete review
 	$('.userReview').on('click', '.deleteReview', function (event){
+			event.preventDefault();
 		    var id= $(this).parents('.review').data('review-id');
 		    console.log('id',id);
 		    $('.deleteReview').data('review-id', id);
@@ -170,10 +211,31 @@ getUser();
 		    		url: url,
 		    		success: function(response){
 		    			$('.userReview').empty();
-		    			getReviews();
+		    			getUserReviews(response);
 		    		}
 		    	});
+
 	});
+
+//delete user review
+	$('.userName').on('click', '.deleteUserReview', function (event){
+		var postId = $(this).parents('.post').data('post-id');
+		var userId = $(this).parents('.user').data('user-id');
+		console.log('postId', postId);
+		console.log('userId', userId);
+		$('.deleteUserReview').data('post-id');
+		url = '/users/' + userId + '/reviews/'+ postId;
+			$.ajax({
+				method: "DELETE",
+				url: url,
+				success: function(response) {
+					$('.userName').empty();
+					getUserReviews(response);
+
+				}
+			});
+	});
+
 
 //for user.html
 function renderProfile(user) {
@@ -194,14 +256,11 @@ function renderProfile(user) {
   "                        <h4 class='inline-header'> user name:</h4>" +
   "                        <span class='User'>"  + user.username + "</span>" +
   "                      </li>" +
-  // "                      <li class='list-group-item'>" +
-  // "                        <h4 class='inline-header'>Movie rating:</h4>" +
-  // "                        <span class='Rated'>" + movie.Rated + "</span>" +
-  // // "                      </li>" +
-  // "                      <li class='list-group-item'>" +
-  // "                        <h4 class='inline-header'>Released date:</h4>" +
-  // "                        <span class='Released'>" + movie.Released + "</span>" +
-  // "                      </li>" +
+  "                      </li>" +
+  "                      <li class='list-group-item'>" +
+  "                        <h4 class='inline-header'>Movie Reviews:</h4>" +
+  "                        <span id='userMovieReviews'></span>" +
+  "                      </li>" +
   // "                      <li class='list-group-item'>" +
   // "                        <h4 class='inline-header'> Summary:</h4>" +
   // "                        <span class='Plot'>" + movie.Plot + "</span>" +
@@ -216,7 +275,7 @@ function renderProfile(user) {
   "                <!-- end of user internal row -->" +
   "              </div>" + // end of panel-body
   "              <div class='panel-footer'>" +
-  "                <button class='btn btn-info deleteUser'>Delete User</button>" +
+  "                <button class='btn btn-danger deleteUser'>Delete User</button>" +
   // "                <button class='btn btn-success addReview'>Add a Review</button>" +
   "              </div>" +
   "            </div>" +
@@ -226,20 +285,54 @@ function renderProfile(user) {
 $('.userName').prepend(profileHtml);
 }
 
-	
+function renderUserReview(content) {
+	//console.log('content', content);
+  var UserReviewHtml =
+
+  "        <!-- one user -->" +
+  "        <div class='row post' data-post-id='" + content._id + "'>" +
+  "          <div class='col-md-12'>" +
+  "            <div class='panel panel-default'>" +
+  "              <div class='panel-body'>" +
+  "              <!-- begin movie internal row -->" +
+  "                <div class='row'>" +
+  "                  <div class='col-md-12 col-xs-12'>" +
+  "                    <ul class='list-group'>" +
+  "                      		<li class='list-group-item'>" +
+	"                      <h4 class='inline-header'>Movie:</h4>" +
+	"                      <span class='movieName'>" + content.movie + "</span>" +
+	"                      <li class='list-group-item'>" +
+	"                      <h4 class='inline-header'>Review:</h4>" +
+	"                      <span class='movieText'>" + content.text + "</span>" +
+  "                    </ul>" +
+  "                  </div>" +
+  "                </div>" +
+  "                <!-- end of user internal row -->" +
+  "              </div>" + // end of panel-body
+  "              <div class='panel-footer'>" +
+  "                <button class='btn btn-danger deleteUserReview'>Delete Review</button>" +
+  "                <button class='btn btn-warning editUserReview'>Edit Review</button>" +
+  "              </div>" +
+  "            </div>" +
+  "          </div>" +
+  "          <!-- end one user -->";
+$('#userMovieReviews').prepend(UserReviewHtml);
+}
+
+
 //makes movies
 function renderSearch(movie) {
   
   var searchHtml =
   "        <!-- one movie -->" +
-  "        <div class='row movie' data-movie-id='" + 'hard coded data' + "'>" +
+  "        <div class='row movie' data-movie-id='" + movie.Title + "'>" +
   "          <div class='col-md-10 col-md-offset-1'>" +
   "            <div class='panel panel-default'>" +
   "              <div class='panel-body'>" +
   "              <!-- begin movie internal row -->" +
   "                <div class='row'>" +
   "                  <div class='col-md-3 col-xs-12 thumbnail album-art'>" +
-  "                     <img src='" + "http://placehold.it/400x400'" +  " alt='movie poster'>" +
+  "                     <img src='" + "http://placehold.it/75x75'" +  " alt='movie poster'>" +
   "                  </div>" +
   "                  <div class='col-md-9 col-xs-12'>" +
   "                    <ul class='list-group'>" +
@@ -278,6 +371,7 @@ function renderSearch(movie) {
 $('.movieResults').empty();
 $('.movieResults').prepend(searchHtml);
 }
+
 //makes reviews
 function renderReview(review) {
 
@@ -299,8 +393,12 @@ function renderReview(review) {
   "                        <span class='userName'>" + review.user + "</span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
+  "                        <h4 class='inline-header'>Movie:</h4>" +
+  "                        <span class='movie'>" + review.movie + "</span>" +
+  "                      </li>" +
+   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Review:</h4>" +
-  "                        <span class='review'>" + review.review + "</span>" +
+  "                        <span class='review'>" + review.text + "</span>" +
   "                      </li>" +
   "                    </ul>" +
   "                  </div>" +

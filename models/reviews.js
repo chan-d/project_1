@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var ReviewSchema = new Schema({
-	user: Array,
+	user: String,
 	movie: String,
 	text: String
 });

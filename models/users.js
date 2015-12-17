@@ -11,7 +11,7 @@ var UserSchema = new Schema({
 	// watchlistItem: [WatchlistSchema],
 	reviews: [Review.schema]
 //	review: [{movie: String, 
-//			 text: String}]
+			 // text: String}]
 
 });
 
