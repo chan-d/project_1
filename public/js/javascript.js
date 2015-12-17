@@ -88,7 +88,7 @@ function getUser(){
 		userSearched = $('#movieSearch').val();
 		$.ajax({
 			method: "GET",
-			url: 'http://www.omdbapi.com/?t=' + userSearched + '&y=&plot=full&r=json',
+			url: 'https://www.omdbapi.com/?t=' + userSearched + '&y=&plot=full&r=json',
 			success: function(movie){
 				renderSearch(movie);
 			}
