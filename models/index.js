@@ -1,5 +1,8 @@
 var mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/b-side");
+    mongoose.connect( process.env.MONGOLAB_URI ||
+                      process.env.MONGOHQ_URL || 
+                      "mongodb://localhost/b-side" );
+
 
 module.exports.Watchlist = require('./watchlistItems.js');
 module.exports.User = require('./users.js');
