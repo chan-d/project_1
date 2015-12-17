@@ -23,7 +23,7 @@ function getReviews(){
 function getUserReviews() {
 					$.ajax({
 					method: "GET",
-					url: '/profile',
+					url: '/userName',
 					success: function(response){
 						var id = response.user._id;
 						renderProfile(response.user);
@@ -128,7 +128,7 @@ function getUser(){
 			$('#postReviewModal').modal("hide");
 				$.ajax({
 					mehtod: "GET",
-					url: '/profile',
+					url: '/userName',
 					success: function(response){
 						var id = response.user._id;
 						//post to users/:id/reviews

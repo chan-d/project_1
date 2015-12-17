@@ -43,7 +43,7 @@ app.post('/signup', function (req, res) {
   User.register(new User({ username: req.body.username }), req.body.password,
     function (err, newUser) {
       passport.authenticate('local')(req, res, function() {
-        res.redirect('/');
+        res.redirect('/profile');
       });
     }
   );
@@ -74,7 +74,7 @@ app.get('/users/:id/reviews', function findUser(req, res){
     });
   });
 
-  app.get('/profile', function (req, res) {
+  app.get('/userName', function (req, res) {
     res.json({user: req.user});
   });
   // app.post('/users/:id/reviews', function userReviews(){
@@ -105,13 +105,13 @@ app.get('/users/:id/reviews', function findUser(req, res){
   	res.sendFile(__dirname + '/view/signup.html');
   });
 
-  app.get('/userName', function userPage(req, res){
+  app.get('/profile', function userPage(req, res){
     res.sendFile(__dirname + '/view/user.html');
   });
 
 // log in user
   app.post('/login', passport.authenticate('local'), function (req, res) {
-    res.redirect('/userName');
+    res.redirect('/profile');
   });
 
   // show user profile page
