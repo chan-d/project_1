@@ -306,6 +306,7 @@ function renderUserReview(content) {
 
 //makes movies
 function renderSearch(movie) {
+	console.log(movie);
   var searchHtml =
   "        <!-- one movie -->" +
   "        <div class='row movie' data-movie-id='" + movie.Title + "'>" +
@@ -315,7 +316,7 @@ function renderSearch(movie) {
   "              <!-- begin movie internal row -->" +
   "                <div class='row'>" +
   "                  <div class='col-md-3 col-xs-12 thumbnail album-art'>" +
-  "                     <img src='" + "http://placehold.it/75x75'" +  " alt='movie poster'>" +
+  "                     <img src="+ movie.Poster +"> <alt='movie poster'>" +
   "                  </div>" +
   "                  <div class='col-md-9 col-xs-12'>" +
   "                    <ul class='list-group'>" +
@@ -354,6 +355,7 @@ function renderSearch(movie) {
 	$('.movieResults').empty();
 	$('.movieResults').prepend(searchHtml);
 }
+
 
 //makes reviews
 function renderReview(review) {
