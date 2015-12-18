@@ -102,8 +102,8 @@ $('.movieResults').on('click', '#getReviews', function (event){
 		method: "GET",
 		url: '/api/reviews',
 		success: function(response){
-			$('.userReview').empty();
 			response.forEach(function (element){
+			$('.userReview').empty();
 			renderReview(element);
 			});
 		}
