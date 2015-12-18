@@ -26,3 +26,12 @@ B-side Reviews is a website that allows users to search for movies and leave rev
 * add a watchlist to save the movies a user wants to watch
 * add ability to like other user's reviews
  
+#Screen Shots
+![Alt screenshot](https://github.com/chan-d/project_1/blob/master/public/images/ScreenShot_homepage.png?raw=true)
+Homepage
+
+![Alt screenshot](https://github.com/chan-d/project_1/blob/master/public/images/ScreenShot_sign_up_page.png?raw=true)
+Signup page
+
+![Alt screenshot](https://github.com/chan-d/project_1/blob/master/public/images/ScreenShot_profile.png?raw=true)
+Profile Page
