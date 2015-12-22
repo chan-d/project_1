@@ -116,7 +116,7 @@ $('.movieResults').on('click', '#getReviews', function (event){
 		// $.ajax({
 		// 	method: "POST",
 		// 	url: '/api/users',
-		// 	data: 
+		// 	data:
 		// });
 	});
 
@@ -186,7 +186,7 @@ $('#updateReview').on('click', function (event){
 	dataToAdd._id = id;
 	dataToAdd.user = $("#editReviewModal #editUserName").val();
 	dataToAdd.movie = $("#editReviewModal #editReview").val();
-	url = '/api/reviews/' + id; 
+	url = '/api/reviews/' + id;
 		$.ajax({
 			method: "PUT",
 			url: url,
@@ -292,7 +292,7 @@ function renderUserReview(content) {
   "                    </ul>" +
   "                  </div>" +
   "                </div>" +
-  "                <!-- end of user internal row -->" +
+  "                <!-- end of movie internal row -->" +
   "              </div>" + // end of panel-body
   "              <div class='panel-footer'>" +
   "                <button class='btn btn-danger deleteUserReview'>Delete Review</button>" +
@@ -307,6 +307,10 @@ function renderUserReview(content) {
 //makes movies
 function renderSearch(movie) {
 	console.log(movie);
+	// use a default image if the movie poster is Not Available
+	if (movie.Poster === "N/A") {
+		movie.Poster = "http://www.cinemark.com/media/2308/poster_blank.jpg";
+	}
   var searchHtml =
   "        <!-- one movie -->" +
   "        <div class='row movie' data-movie-id='" + movie.Title + "'>" +
