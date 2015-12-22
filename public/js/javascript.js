@@ -1,11 +1,18 @@
 console.log("Sanity Check: JS is working!");
 
 $(document).ready(function(){
-var userSearched;
+	var userSearched;
 
-var dataToAdd= {};
-var url;
-getUserReviews();
+	var dataToAdd= {};
+	var url;
+	getUserReviews();
+// consider adding just the event listeners, not the whole functions here
+// this keps your document).ready cleaner
+	$('.userName').on('click', '.deleteUser', deleteUser);
+	$('#searchBox').on('submit', handleSearchSubmit);
+	$('.movieResults').on('click', '.addToWatchlist', handleAddToWatchlistClick);
+
+});
 
 //gets all reviews
 function getReviews(){
@@ -32,11 +39,11 @@ function getUserReviews() {
 				url: '/users/' + id + '/reviews',
 				success: function(content) {
 					content.reviews.forEach(function (data){
-					renderUserReview(data);
+						renderUserReview(data);
 					});
 				}
 			});
-	}
+		}
 	});
 }
 
@@ -55,7 +62,7 @@ function getUser(){
 }
 
 //delete user
-$('.userName').on('click', '.deleteUser', function (event){
+function deleteUser() {
 	var id= $(this).parents('.user').data('user-id');
 	$('.deleteReview').data('user-id', id);
 	url= '/users/' + id;
@@ -78,10 +85,10 @@ $('.userName').on('click', '.deleteUser', function (event){
 		}else {
 		    alert("please type 'delete' (case sensitive) to delete user");
 		}
-});
+}
 
 //movie search
-$('#searchBox').on('submit', function (event){
+function handleSearchSubmit() {
 	event.preventDefault();
 	$('.movieResults').empty();
 	userSearched = $('#movieSearch').val();
@@ -93,7 +100,7 @@ $('#searchBox').on('submit', function (event){
 			}
 		});
 
-});
+}
 
 //get all movie reviews
 $('.movieResults').on('click', '#getReviews', function (event){
@@ -110,7 +117,7 @@ $('.movieResults').on('click', '#getReviews', function (event){
 	});
 });
 // not working
-	$('.movieResults').on('click', '.addToWatchlist', function (event){
+function handleAddToWatchlistClick(result) {
 		event.preventDefault();
 		alert('add to watchlist under construction');
 		// $.ajax({
@@ -118,7 +125,7 @@ $('.movieResults').on('click', '#getReviews', function (event){
 		// 	url: '/api/users',
 		// 	data:
 		// });
-	});
+}
 
 // add reviews
 $('.movieResults').on('click', '.addReview', function (event){
@@ -402,4 +409,4 @@ function renderReview(review) {
   "          <!-- end one review -->";
 	$('.userReview').prepend(reviewHtml);
 }
-});
+d
