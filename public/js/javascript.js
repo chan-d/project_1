@@ -326,7 +326,7 @@ function renderSearch(movie) {
   "                    <ul class='list-group'>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'> Movie title:</h4>" +
-  "                        <span class='Title'> <a id='getReviews'>" + movie.Title + "</a></span>" +
+  "                        <span class='Title'> " + movie.Title + " - <a id='getReviews'>Click to see reviews</a></span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Movie rating:</h4>" +
