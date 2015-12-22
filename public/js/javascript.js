@@ -1,11 +1,18 @@
 console.log("Sanity Check: JS is working!");
 
 $(document).ready(function(){
-var userSearched;
+	var userSearched;
 
-var dataToAdd= {};
-var url;
-getUserReviews();
+	var dataToAdd= {};
+	var url;
+	getUserReviews();
+// consider adding just the event listeners, not the whole functions here
+// this keps your document).ready cleaner
+	$('.userName').on('click', '.deleteUser', deleteUser);
+	$('#searchBox').on('submit', handleSearchSubmit);
+	$('.movieResults').on('click', '.addToWatchlist', handleAddToWatchlistClick);
+
+});
 
 //gets all reviews
 function getReviews(){
@@ -32,11 +39,11 @@ function getUserReviews() {
 				url: '/users/' + id + '/reviews',
 				success: function(content) {
 					content.reviews.forEach(function (data){
-					renderUserReview(data);
+						renderUserReview(data);
 					});
 				}
 			});
-	}
+		}
 	});
 }
 
@@ -55,7 +62,7 @@ function getUser(){
 }
 
 //delete user
-$('.userName').on('click', '.deleteUser', function (event){
+function deleteUser() {
 	var id= $(this).parents('.user').data('user-id');
 	$('.deleteReview').data('user-id', id);
 	url= '/users/' + id;
@@ -78,10 +85,10 @@ $('.userName').on('click', '.deleteUser', function (event){
 		}else {
 		    alert("please type 'delete' (case sensitive) to delete user");
 		}
-});
+}
 
 //movie search
-$('#searchBox').on('submit', function (event){
+function handleSearchSubmit() {
 	event.preventDefault();
 	$('.movieResults').empty();
 	userSearched = $('#movieSearch').val();
@@ -93,7 +100,7 @@ $('#searchBox').on('submit', function (event){
 			}
 		});
 
-});
+}
 
 //get all movie reviews
 $('.movieResults').on('click', '#getReviews', function (event){
@@ -110,15 +117,15 @@ $('.movieResults').on('click', '#getReviews', function (event){
 	});
 });
 // not working
-	$('.movieResults').on('click', '.addToWatchlist', function (event){
+function handleAddToWatchlistClick(result) {
 		event.preventDefault();
 		alert('add to watchlist under construction');
 		// $.ajax({
 		// 	method: "POST",
 		// 	url: '/api/users',
-		// 	data: 
+		// 	data:
 		// });
-	});
+}
 
 // add reviews
 $('.movieResults').on('click', '.addReview', function (event){
@@ -186,7 +193,7 @@ $('#updateReview').on('click', function (event){
 	dataToAdd._id = id;
 	dataToAdd.user = $("#editReviewModal #editUserName").val();
 	dataToAdd.movie = $("#editReviewModal #editReview").val();
-	url = '/api/reviews/' + id; 
+	url = '/api/reviews/' + id;
 		$.ajax({
 			method: "PUT",
 			url: url,
@@ -292,7 +299,7 @@ function renderUserReview(content) {
   "                    </ul>" +
   "                  </div>" +
   "                </div>" +
-  "                <!-- end of user internal row -->" +
+  "                <!-- end of movie internal row -->" +
   "              </div>" + // end of panel-body
   "              <div class='panel-footer'>" +
   "                <button class='btn btn-danger deleteUserReview'>Delete Review</button>" +
@@ -307,6 +314,10 @@ function renderUserReview(content) {
 //makes movies
 function renderSearch(movie) {
 	console.log(movie);
+	// use a default image if the movie poster is Not Available
+	if (movie.Poster === "N/A") {
+		movie.Poster = "http://www.cinemark.com/media/2308/poster_blank.jpg";
+	}
   var searchHtml =
   "        <!-- one movie -->" +
   "        <div class='row movie' data-movie-id='" + movie.Title + "'>" +
@@ -322,7 +333,7 @@ function renderSearch(movie) {
   "                    <ul class='list-group'>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'> Movie title:</h4>" +
-  "                        <span class='Title'> <a id='getReviews'>" + movie.Title + "</a></span>" +
+  "                        <span class='Title'> " + movie.Title + " - <a id='getReviews'>Click to see reviews</a></span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Movie rating:</h4>" +
@@ -398,4 +409,4 @@ function renderReview(review) {
   "          <!-- end one review -->";
 	$('.userReview').prepend(reviewHtml);
 }
-});
+d

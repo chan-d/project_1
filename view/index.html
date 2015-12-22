@@ -40,7 +40,7 @@
       <ul class="nav navbar-nav pull-right">
         <li class="active"><a href="/">Home</a></li>
         <li><a href="/profile">Profile</a></li>
-        <li><a href="/signup">Sign Up</a></li> 
+        <li><a href="/signup">Sign Up</a></li>
       </ul>
     </div>
   </div>
@@ -56,7 +56,7 @@
       </div>
     </div>
   </div>
-              <hr>
+              <hr><!-- indentation here is surprising -->
               <div class="container">
               <div class='row'>
               <div class="col-sm-2 left"></div>
@@ -74,7 +74,7 @@
 <br />
   <div class="panel panel-default">
     <div class="panel-body">
-      
+
         <h1 class="mid text-center"> Wanna get in touch?</h1>
     </div>
   </div>
@@ -95,22 +95,21 @@
 
             <!-- Text input-->
             <form id='postReview'>
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="userName" autofocus>User Name</label>
-              <div class="col-md-4">
-              <input id="userName" name="userName" type="text" placeholder="user name" class=" input-lg" required="">
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="userName" autofocus>User Name</label>
+                <div class="col-md-4">
+                <input id="userName" name="userName" type="text" placeholder="user name" class=" input-lg" required="">
 
+                </div>
               </div>
-            </div>
 
-            <!-- Text input-->
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="review">Review</label>
-              <div class="col-md-4">
-             <textarea id="review" rows="10" cols="50"></textarea>
-
+              <!-- Text input-->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="review">Review</label>
+                <div class="col-md-4">
+                  <textarea id="review" rows="10" cols="50"></textarea>
+                </div>
               </div>
-            </div>
             </form>
             </fieldset>
 
@@ -130,36 +129,36 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="editReviewModal">
   <div class="modal-dialog">
     <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Update Review</h4>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <form id='editModal'>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Update Review</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <form id='editModal'>
               <div class="form-group">
                 <label class="col-md-4 control-label" for="userName">User Name</label>
 
                 <input id="editUserName" name="userName" type="text" placeholder="username" class=" input-lg" required="">
-              <!-- Text input-->
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="review">Review</label>
+                <!-- Text input-->
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="review">Review</label>
 
-               <textarea id="editReview" rows="10" cols="50" autofocus></textarea>
+                    <textarea id="editReview" rows="10" cols="50" autofocus></textarea>
                 </div>
-              </div> 
               </div>
-              </div>
-              </form>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <!-- Consider deleting/hiding this button and adding/showing it upon data entry. -->
-            <button type="button" class="btn btn-success" id="updateReview">Save Changes</button>
+            </form>
           </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <!-- Consider deleting/hiding this button and adding/showing it upon data entry. -->
+          <button type="button" class="btn btn-success" id="updateReview">Save Changes</button>
+        </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-  </div>
 </footer>
 </body>
 </html>
